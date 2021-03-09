@@ -3,6 +3,9 @@ import './login.css';
 import firebase from '../../config/firebase';
 import 'firebase/auth';
 import Loader from '../../componentes/basicos/Loader';
+import {Link, Redirect} from 'react-router-dom'
+
+import { useSelector, useDispatch } from 'react-redux'
 
 function Login() {
 
@@ -10,6 +13,8 @@ function Login() {
     const [senha, setSenha] = useState();
     const [msgTipo, setMsgTipo] = useState();
     const [carregando, setCarregando] = useState();
+
+    const dispatch = useDispatch()
 
     function logar() {
         setCarregando(1);
@@ -24,6 +29,10 @@ function Login() {
         firebase.auth().signInWithEmailAndPassword(email, senha).then(resultado => {
             setCarregando(0);
             setMsgTipo('sucesso');
+            setTimeout(() => {
+                dispatch({type: 'LOG_IN', usuarioEmail: email})
+            }, 2000)
+            
         }).catch(erro => {
             setCarregando(0);
             setMsgTipo('erro');
@@ -34,6 +43,11 @@ function Login() {
 
     return (
         <div className='login-content d-flex align-items-center'>
+
+            {
+                useSelector(state => state.usuarioLogado) > 0 ? <Redirect to='/' /> : null
+            }
+
             <form className="form-signin mx-auto">
                 <div className="text-center mb-4">
                     <h1 className="h3 mb-3 font-weight-normal text-white font-weight-bold">Login</h1>
@@ -55,7 +69,7 @@ function Login() {
 
                 <div className="opcoes-login mt-5">
                     <a href="#" className='mx-2'>Recuperar Senha</a>
-                    <a href="#" className='mx-2'>Quero Cadastrar</a>
+                    <Link to='novousuario' className='mx-2'>Quero Cadastrar</Link>
                 </div>
             </form>
         </div>

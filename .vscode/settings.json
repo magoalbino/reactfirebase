@@ -55,5 +55,6 @@
         "code-runner.saveFileBeforeRun": true,
         "code-runner.runInTerminal": true,
         "code-runner.preserveFocus": true
-    }
+    },
+    "terminal.explorerKind": "external"
 }
