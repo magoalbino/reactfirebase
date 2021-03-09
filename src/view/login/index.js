@@ -14,6 +14,13 @@ function Login() {
     function logar() {
         setCarregando(1);
 
+        if (!email || !senha) {
+            setCarregando(0);
+            setMsgTipo('erro');
+            // setMsg('Você precisa informar o email e a senha!');
+            return false;
+        }
+
         firebase.auth().signInWithEmailAndPassword(email, senha).then(resultado => {
             setCarregando(0);
             setMsgTipo('sucesso');
