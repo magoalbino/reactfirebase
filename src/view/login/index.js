@@ -7,6 +7,9 @@ import {Link, Redirect} from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSmileWink } from '@fortawesome/free-solid-svg-icons'
+
 function Login() {
 
     const [email, setEmail] = useState();
@@ -29,9 +32,9 @@ function Login() {
         firebase.auth().signInWithEmailAndPassword(email, senha).then(resultado => {
             setCarregando(0);
             setMsgTipo('sucesso');
-            setTimeout(() => {
+            // setTimeout(() => {
                 dispatch({type: 'LOG_IN', usuarioEmail: email})
-            }, 2000)
+            // }, 2000)
             
         }).catch(erro => {
             setCarregando(0);
@@ -50,6 +53,7 @@ function Login() {
 
             <form className="form-signin mx-auto">
                 <div className="text-center mb-4">
+                    <FontAwesomeIcon icon={faSmileWink} color='white' size='5x'/>
                     <h1 className="h3 mb-3 font-weight-normal text-white font-weight-bold">Login</h1>
                 </div>
 
@@ -68,7 +72,7 @@ function Login() {
                 </div>
 
                 <div className="opcoes-login mt-5">
-                    <a href="#" className='mx-2'>Recuperar Senha</a>
+                    <Link to='usuariorecuperarsenha' className='mx-2'>Recuperar Senha</Link>
                     <Link to='novousuario' className='mx-2'>Quero Cadastrar</Link>
                 </div>
             </form>
