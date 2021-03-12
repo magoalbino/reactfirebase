@@ -8,6 +8,20 @@ import Navbar from '../../componentes/navbar/'
 function EventoCadastro(){
 
     const [msgTipo, setMsgTipo] = useState();
+    const [titulo, setTitulo] = useState();
+    const [tipo, setTipo] = useState();
+    const [detalhes, setDetalhes] = useState();
+    const [data, setData] = useState();
+    const [hora, setHora] = useState();
+    const [foto, setFoto] = useState();
+    const [usuarioemail, setUsuarioEmail] = useState();
+
+    const storage = firebase.storage();
+    const db = firebase.firestore();
+
+    function cadastrar(){
+        // storage.reg(imagens)
+    }
 
     return(
         <>
@@ -56,7 +70,7 @@ function EventoCadastro(){
                     <input type='file' className='form-control' />
                 </div>
 
-                <button type='button' className='btn btn-lg btn-block mt-3 mb-5 btn-publicar'>Cadastrar Evento</button>
+                <button onClick={cadastrar} type='button' className='btn btn-lg btn-block mt-3 mb-5 btn-publicar'>Cadastrar Evento</button>
 
             </form>
 
