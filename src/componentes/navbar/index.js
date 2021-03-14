@@ -1,8 +1,5 @@
 import React from 'react';
 import './navbar.css';
-// import firebase from '../../config/firebase';
-// import 'firebase/auth';
-// import Loader from '../../componentes/basicos/Loader';
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSmileWink } from '@fortawesome/free-solid-svg-icons'
