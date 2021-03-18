@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useSelector} from 'react-redux'
 import './evento-cadastro.css';
 import firebase from '../../config/firebase';
@@ -6,7 +6,7 @@ import firebase from '../../config/firebase';
 import Navbar from '../../componentes/navbar/'
 import Loader from '../../componentes/basicos/Loader';
 
-function EventoCadastro(){
+function EventoCadastro(props){
 
     const [msgTipo, setMsgTipo] = useState();
     const [titulo, setTitulo] = useState();
@@ -20,6 +20,18 @@ function EventoCadastro(){
 
     const storage = firebase.storage();
     const db = firebase.firestore();
+
+    useEffect( () => {
+        firebase.firestore().collection('eventos').doc(props.match.params.id).get().then(
+            resultado => {
+                setTitulo(resultado.data().titulo)
+                setTipo(resultado.data().tipo)
+                setDetalhes(resultado.data().detalhes)
+                setData(resultado.data().data)
+                setHora(resultado.data().hora)
+            }
+        )
+    }, [])
 
     function cadastrar(){
         setMsgTipo(null)
@@ -52,18 +64,18 @@ function EventoCadastro(){
         <Navbar />
         <div className='col-12 mt-5'>
             <div className='row'>
-                <h3 className='mx-auto font-weight-bold'>Novo Evento</h3>
+                <h3 className='mx-auto font-weight-bold'>{props.match.params.id ? 'Editar Evento' : 'Novo Evento'}</h3>
             </div>
 
             <form>
                 <div className='form-group'>
                     <label>Título:</label>
-                    <input onChange={(e) => setTitulo(e.target.value)} type='text' className='form-control' />
+                    <input onChange={(e) => setTitulo(e.target.value)} type='text' className='form-control' value={titulo && titulo} />
                 </div>
 
                 <div className='form-group'>
                     <label>Tipo do Evento:</label>
-                    <select onChange={(e) => setTipo(e.target.value)} className='form-control'>
+                    <select onChange={(e) => setTipo(e.target.value)} className='form-control' value={tipo && tipo}>
                         <option disabled selected value>-- Selecione um tipo --</option>
                         <option>Festa</option>
                         <option>Teatro</option>
@@ -74,18 +86,18 @@ function EventoCadastro(){
 
                 <div className='form-group'>
                     <label>Descrição do Evento:</label>
-                    <textarea onChange={(e) => setDetalhes(e.target.value)} className='form-control' rows='3'></textarea>
+                    <textarea onChange={(e) => setDetalhes(e.target.value)} className='form-control' rows='3' value={detalhes && detalhes}></textarea>
                 </div>
 
                 <div className='form-group row'>
                     <div className='col-6'>
                         <label>Data:</label>
-                        <input onChange={(e) => setData(e.target.value)} type='date' className='form-control' />
+                        <input onChange={(e) => setData(e.target.value)} type='date' className='form-control' value={data && data} />
                     </div>
 
                     <div className='col-6'>
                         <label>Hora:</label>
-                        <input onChange={(e) => setHora(e.target.value)} type='time' className='form-control' />
+                        <input onChange={(e) => setHora(e.target.value)} type='time' className='form-control' value={hora && hora} />
                     </div>
                 </div>
 
@@ -96,7 +108,10 @@ function EventoCadastro(){
 
                 {
                     carregando ? <Loader />
-                    : <button onClick={cadastrar} type='button' className='btn btn-lg btn-block mt-3 mb-5 btn-publicar'>Publicar Evento</button>
+                    : <button onClick={cadastrar} type='button' className='btn btn-lg btn-block mt-3 mb-5 btn-publicar'>
+                       {props.match.params.id ? 'Atualizar Evento' : 'Publicar Evento'}
+                        
+                    </button>
                 }
 
             </form>
