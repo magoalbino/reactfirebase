@@ -1,12 +1,12 @@
 import firebase from 'firebase';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAznQuEnar7E36F0qUeAhIsjPcwvEYQoRY",
-    authDomain: "curso-eventos.firebaseapp.com",
-    projectId: "curso-eventos",
-    storageBucket: "curso-eventos.appspot.com",
-    messagingSenderId: "575893968478",
-    appId: "1:575893968478:web:6a61af618c074c3ece86cf"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID
 };
 // Initialize Firebase
 export default firebase.initializeApp(firebaseConfig);
