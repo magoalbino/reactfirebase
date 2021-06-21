@@ -8,4 +8,5 @@ Cadastro com email e senha e publicação de evento com upload de imagem.
 - fontAwesome
 
 ## init 
+- criar arquivo .env.local com as variáveis de configuração do firebase
 - npm start
